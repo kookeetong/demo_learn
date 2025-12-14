@@ -1,10 +1,21 @@
-body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; margin: 18px; color: #123; }
-h1 { margin: 4px 0 10px 0; font-size: 20px; }
-.controls { margin-bottom: 8px; }
-#simwrap { border: 1px solid #ddd; display: inline-block; background: #eef7ff; }
-.hint { margin-top: 8px; color: #444; }
+.controls { margin-bottom: 12px; }
+.hint { margin-top: 12px; color: #444; }
+
+/* Page layout: center main area vertically and horizontally */
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; margin: 0; color: #123; min-height: 100vh; display: flex; flex-direction: column; }
+main#main { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 18px 12px; box-sizing: border-box; }
+
+#simwrap { border: 1px solid #ddd; display: block; background: #eef7ff; width: 1100px; margin: 8px auto; padding: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.04); border-radius: 6px; }
+.controls label { font-size: 14px; }
+.controls label { font-size: 14px; }
 svg text { font-size: 12px; fill: #123; }
 .draggable { cursor: move; }
 #imageRect { opacity: 0.95; }
 #rays line { stroke: rgba(20,20,150,0.25); stroke-width: 1.8; }
 #rays path { stroke: rgba(20,20,150,0.25); stroke-width: 1.8; fill: none; }
+
+/* make sure simulation scales on small screens */
+@media (max-width: 1240px) {
+	#simwrap { width: 98%; }
+	svg#scene { width: 100%; height: auto; }
+}

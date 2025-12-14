@@ -298,7 +298,9 @@ svg.addEventListener('touchstart', (e)=>{ startDrag(e.touches[0]); e.preventDefa
 window.addEventListener('touchmove', (e)=>{ doDrag(e.touches[0]); }, {passive:false});
 window.addEventListener('touchend', endDrag);
 
+// support both range and number input; update display and re-render on change
 focal.addEventListener('input', ()=>{ fval.textContent = focal.value; computeAndRender(); });
+focal.addEventListener('change', ()=>{ fval.textContent = focal.value; computeAndRender(); });
 
 // initial render
 computeAndRender();
