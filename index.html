@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>凸透镜成像模拟</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>凸透镜成像模拟</h1>
+  <div class="controls">
+    <label>焦距: <input id="focal" type="range" min="40" max="220" value="120" /> <span id="fval">120</span> px</label>
+  </div>
+
+  <div id="simwrap">
+    <svg id="scene" width="900" height="420" viewBox="0 0 900 420" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="glass" x1="0" x2="1">
+          <stop offset="0" stop-color="#bfe7ff" stop-opacity="0.8" />
+          <stop offset="1" stop-color="#ffffff" stop-opacity="0.6" />
+        </linearGradient>
+      </defs>
+
+      <rect x="0" y="0" width="900" height="420" fill="#f7fbff" />
+
+      <g id="elements">
+        <!-- object (candle) -->
+        <g id="object" class="draggable" transform="translate(180,200)">
+          <rect x="-6" y="-80" width="12" height="80" fill="#b35400" />
+          <polygon points="0,-90 -6,-80 6,-80" fill="#ffdd55" />
+          <text id="objLabel" x="0" y="20" text-anchor="middle">蜡烛</text>
+        </g>
+
+        <!-- lens -->
+        <g id="lens" class="draggable" transform="translate(450,210)">
+          <ellipse cx="0" cy="0" rx="8" ry="140" fill="url(#glass)" stroke="#66aaff" stroke-width="2" />
+          <text x="0" y="160" text-anchor="middle">透镜</text>
+        </g>
+
+        <!-- screen -->
+        <g id="screen" class="draggable" transform="translate(740,40)">
+          <rect x="-2" y="0" width="4" height="340" fill="#222" opacity="0.6" />
+          <rect id="screenSurface" x="-60" y="40" width="120" height="260" fill="#fff" stroke="#999" stroke-width="1" opacity="0.95" />
+          <text x="0" y="370" text-anchor="middle">屏幕</text>
+        </g>
+
+        <!-- projected image (rendered) -->
+        <g id="imageGroup">
+          <g id="image" transform="translate(740,200)" opacity="0.9">
+            <rect id="imageRect" x="-6" y="-80" width="12" height="80" fill="#ffaaaa" stroke="#990000" />
+            <polygon id="imageFlame" points="0,-90 -6,-80 6,-80" fill="#ffdd55" />
+          </g>
+          <g id="virtualImage" opacity="0.7" visibility="hidden">
+            <rect id="vImageRect" x="-6" y="-80" width="12" height="80" fill="#aaffaa" stroke="#009900" />
+            <polygon id="vImageFlame" points="0,-90 -6,-80 6,-80" fill="#ffdd55" />
+            <text x="0" y="20" text-anchor="middle">虚像</text>
+          </g>
+        </g>
+
+        <!-- ray lines for visualization -->
+        <g id="rays"></g>
+      </g>
+
+        <!-- optical axis and markers will be drawn here (placed after elements so it's visible on top) -->
+        <g id="axisGroup"></g>
+
+      <!-- info panel -->
+      <g id="stats" transform="translate(10,8)">
+        <rect x="0" y="0" width="220" height="90" fill="#ffffff" stroke="#ccc" rx="6" ry="6" opacity="0.95" />
+        <text id="dObj" x="10" y="18">物距 (do): </text>
+        <text id="dImg" x="10" y="36">像距 (di): </text>
+        <text id="mag" x="10" y="54">放大率: </text>
+        <text id="hObj" x="10" y="72">物高: </text>
+        <text id="hImg" x="10" y="90">像高: </text>
+      </g>
+
+    </svg>
+  </div>
+
+  <p class="hint">拖拽“蜡烛”、”透镜“、”屏幕“来观察成像变化。焦距可调（像素单位）。</p>
+
+  <script src="script.js"></script>
+</body>
+</html>
