@@ -1,10 +1,33 @@
 version: "3.8"
+
 services:
+  cloner:
+    image: alpine/git
+    command: clone --depth 1 https://github.com/kookeetong/demo_learn.git /data
+    volumes:
+      - /mnt/usb2-2/docker/demo_learn:/data
+    restart: "no"
+
   web:
     image: nginx:alpine
-    container_name: demo-static-site
+    depends_on:
+      - cloner
     ports:
-      - "80:80"
+      - "8001:80"
     volumes:
-      - ./site:/usr/share/nginx/html:ro
+      - /mnt/usb2-2/docker/demo_learn:/usr/share/nginx/html:ro
     restart: unless-stopped
+
+volumes:
+  site-data:
+    driver: local
+
+# Usage:
+# 1. On your NAS (or machine with Docker Compose), run:
+#    docker compose up -d
+#    This runs the `cloner` service to clone the repo into the named volume
+#    and then starts `nginx` serving the cloned files on port 80.
+# 2. To update the site later, re-run the cloner service:
+#    docker compose run --rm cloner
+#    then restart nginx if needed:
+#    docker compose restart web
